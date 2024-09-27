@@ -2,8 +2,11 @@ import React from 'react'
 
 const Dashboard = () => {
   return (
-    <div>
-      <h1>Dashboard</h1>
+    <div className='min-h-screen'>
+      <input type='search' placeholder='Enter The Transition'  name='Search'/>
+      <label  htmlFor='dropdown' className=''>
+        Choose An Option
+      </label>
     </div>
   )
 }

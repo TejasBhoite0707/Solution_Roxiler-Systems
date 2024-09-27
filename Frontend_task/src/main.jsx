@@ -13,6 +13,10 @@ const router=createBrowserRouter([
     path:'/',
     element:<App/>,
     children:[
+      {
+        index:true,
+        element:<Dashboard/>
+      },
 {path:'/dashboard',element:<Dashboard/> },
 {path:'/statistics',element:<Statistics/>},
 {path:'/barchart',element:<Barchart/>},
