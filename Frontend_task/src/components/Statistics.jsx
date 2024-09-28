@@ -1,39 +1,35 @@
-import React, { useState } from 'react'
+/* eslint-disable react/prop-types */
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
-const Statistics = () => {
-  const [selectedMonth, setSelectedMonth] = useState  ('June'); 
+const Statistics = ({ month }) => {
+  const [statistics, setStatistics] = useState({});
 
+  useEffect(() => {
+    fetchData();
+  }, [month]);
 
-  const statistics = {
-    totalSale: 100000,
-    totalSoldItem: 55,
-    totalNotSoldItem: 15,
+  const fetchData = async () => {
+    try {
+      const statsRes = await axios.get(`http://localhost:3000/api/statistics?month=${month}`);
+      setStatistics(statsRes.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
-      <div className="bg-white shadow-lg rounded-lg p-6 w-80">
-        <h1 className="text-xl font-bold">
-          Statistics - {selectedMonth}
-          <span className="text-sm text-gray-500 ml-2">(Selected month name from dropdown)</span>
-        </h1>
-        <div className="bg-yellow-200 p-4 rounded-lg mt-4">
-          <div className="flex justify-between py-1">
-            <span>Total sale</span>
-            <span>{statistics.totalSale}</span>
-          </div>
-          <div className="flex justify-between py-1">
-            <span>Total sold item</span>
-            <span>{statistics.totalSoldItem}</span>
-          </div>
-          <div className="flex justify-between py-1">
-            <span>Total not sold item</span>
-            <span>{statistics.totalNotSoldItem}</span>
-          </div>
-        </div>
+    <div id="statistics">
+      <h2 className="text-2xl font-bold mb-6">Sales Dashboard</h2>
+      <div className="bg-white p-6 rounded-lg shadow mt-6">
+        <h3 className="text-xl font-semibold mb-4">Statistics</h3>
+        <p className="mb-2">Total Sale Amount: ${statistics.totalSaleAmount}</p>
+        <p className="mb-2">Total Sold Items: {statistics.totalSoldItems}</p>
+        <p>Total Not Sold Items: {statistics.totalNotSoldItems}</p>
       </div>
     </div>
   );
-}
+};
 
 export default Statistics;
